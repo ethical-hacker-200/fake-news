@@ -1,0 +1,29 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <title>Fake News Detector</title>  
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        textarea { width: 60%; height: 100px; }
+        button { padding: 10px; cursor: pointer; }
+    </style>  
+</head>  
+<body>  
+    <h1>AI Fake News Detector</h1>  
+    <form id="newsForm">
+        <textarea name="news_text" placeholder="Paste news article here..."></textarea><br>
+        <button type="submit">Check News</button>
+    </form>  
+    <h2 id="result"></h2>  
+
+    <script>
+        document.getElementById("newsForm").onsubmit = async function(event) {
+            event.preventDefault();
+            let formData = new FormData(event.target);
+            let response = await fetch("/predict", { method: "POST", body: formData });
+            let data = await response.json();
+            document.getElementById("result").innerText = data.prediction;
+        }
+    </script>  
+</body>  
+</html>
